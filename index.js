@@ -1,11 +1,13 @@
 const express = require('express')
 
 const projectRoutes = require('./routes/projectRoutes')
+const actionRoutes = require('./routes/actionRoutes')
 
 const app = express()
 
 app.use(express.json())
 app.use('/projects', projectRoutes)
+app.use('/actions', actionRoutes)
 
 app.get('/', (req, res) => {
     res.json({ ok: true })
