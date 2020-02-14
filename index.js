@@ -11,6 +11,13 @@ app.get('/', (req, res) => {
     res.json({ ok: true })
 })
 
+app.use((err, req, res, next) => {
+    console.log(err)
+    res.status(err.httpStatusCode || 500).json({
+        message: err.message
+    })
+})
+
 const port = process.env.PORT || 5000
 
 app.listen(
