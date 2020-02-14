@@ -24,7 +24,7 @@ router.get('/', async (req, res, next) => {
 router.post('/', validatePostProject, async (req, res, next) => {
     try {
         const newProject = await insert(req.body)
-        res.json(newProject)
+        res.status(201).json(newProject)
     } catch (e) {
         next(e)
     }
@@ -43,6 +43,15 @@ router.delete('/:id', validateProjectID, async (req, res, next) =>{
     try {
         await remove(req.projectID)
         res.json(req.projectID)
+    } catch (e) {
+        next(e)
+    }
+})
+
+router.get('/:id/actions', validateProjectID, async(req, res, next) => {
+    try {
+        const actions = await getProjectActions(req.projectID)
+        res.json(actions)
     } catch (e) {
         next(e)
     }
