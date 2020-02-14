@@ -38,4 +38,22 @@ router.post('/:id',  validateActionBody,validateProjectID, async (req, res, next
     }
 })
 
+router.put('/:id', validateActionBody, validateActionID, async (req, res, next) => {
+    try {
+        const updatedAction = await update(req.actionID, req.body)
+        res.json(updatedAction)
+    } catch (e) {
+        next(e)
+    }
+})
+
+router.delete('/:id', validateActionID, async (req, res, next) => {
+    try {
+        await remove(req.actionID)
+        res.json(req.actionID)
+    } catch (e) {
+        next(e)
+    }
+})
+
 module.exports = router
