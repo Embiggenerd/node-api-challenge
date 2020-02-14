@@ -27,6 +27,7 @@ function get(id) {
       } else {
         return null;
       }
+      
     });
   } else {
     return query.then(projects => {

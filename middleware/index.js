@@ -19,6 +19,22 @@ const validatePostProject = (req, res, next) => {
     }
 }
 
+const validateProjectID = (req, res, next) => {
+    try {
+        if(!req.params.id){
+            const noID = new Error('Project ID required')
+            noID.httpStatusCode = 400
+            throw noID
+        }
+
+        req.projectID = req.params.id
+        next()
+    } catch (e) {
+        next(e)
+    }
+}
+
 module.exports = {
-    validatePostProject
+    validatePostProject,
+    validateProjectID
 }
