@@ -67,8 +67,30 @@ const validateActionID = async (req, res, next) => {
     }
 }
 
+const validateActionBody = (req, res, next) => {
+    try {
+        if (!req.body) {
+            const noBody = new Error('Project data missing')
+            noBody.httpStatusCode = 400
+            throw noBody
+        }
+
+        const { notes, description } = req.body
+        if (!description || !notes) {
+            const incomplete = new Error('Required field missing')
+            incomplete.statusCode = 400
+            throw incomplete
+        }
+
+        next()
+    } catch (e) {
+        next(e)
+    }
+}
+
 module.exports = {
     validatePostProject,
     validateProjectID,
-    validateActionID
+    validateActionID,
+    validateActionBody
 }

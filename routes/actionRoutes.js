@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { validateActionID } = require('../middleware')
+const { validateActionID, validateActionBody, validateProjectID } = require('../middleware')
 
 const {
     get,
@@ -24,6 +24,15 @@ router.get('/:id', validateActionID, async (req, res, next) => {
     try {
         const actions = await get(req.actionID)
         res.json(actions)
+    } catch (e) {
+        next(e)
+    }
+})
+
+router.post('/:id',  validateActionBody,validateProjectID, async (req, res, next) => {
+    try {
+        const newAction = await insert({ ...req.body, project_id: req.projectID })
+        res.json(newAction)
     } catch (e) {
         next(e)
     }
